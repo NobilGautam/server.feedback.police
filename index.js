@@ -37,13 +37,15 @@ app.get('/send-text', (req, res) => {
         console.log(recipient);
     });
 });
-app.get('/send-followup', (req, res) => {
+app.get('/send-followup/:documentId', (req, res) => {
     const { recipient, polStation } = req.query;
+    const {documentId}=req.params;
+
 
     console.log('SMS request received:', { recipient });
 
     client.messages.create({
-        body: `Thank you for vising Police Station. \nYou are requested to kindly fill the follow up form by clicking on the url: https://feedback-system-police-private.vercel.app/myVisits after your visit. It is mandatory to fill the follow up form within one week. \nRegards`,
+        body: `Thank you for vising Police Station. \nYou are requested to kindly fill the follow up form by clicking on the url: https://feedback-system-police-private.vercel.app/myfeedback/${documentId} after your visit. It is mandatory to fill the follow up form within one week. \nRegards`,
         to: recipient,
         from: '+19287560963' // From Twilio
     })
